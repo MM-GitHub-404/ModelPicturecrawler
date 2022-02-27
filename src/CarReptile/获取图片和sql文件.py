@@ -3,8 +3,6 @@ from random import randint
 import requests
 
 
-# 好好好
-
 # 封装图片下载方法
 def downloadImage(img_list, img_url, img_name, filePath):
     # 以UTF-8编码方式打开保存的网站内容,并解析为HTML文档
