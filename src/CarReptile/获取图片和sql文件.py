@@ -3,8 +3,15 @@ from random import randint
 import requests
 
 
-# 封装图片下载方法
 def downloadImage(img_list, img_url, img_name, filePath):
+    """
+    封装图片下载方法
+
+    :param img_list:定位到的所有需要的图片列表
+    :param img_url:图片地址
+    :param img_name:图片名字
+    :param filePath:网页源代码文件位置
+    """
     # 以UTF-8编码方式打开保存的网站内容,并解析为HTML文档
     do = etree.HTML(open(filePath, encoding='utf-8').read())
     # 定位需要获取数据的html标签,装入列表以便遍历输出
@@ -22,8 +29,15 @@ def downloadImage(img_list, img_url, img_name, filePath):
         print('%s下载成功' % name[0])
 
 
-# 封装批量拼装sql语句方法
 def sqlSplicing(filePath, list_name, list_con, list_price):
+    """
+    封装批量拼装sql语句方法
+
+    :param filePath:网页源代码文件位置
+    :param list_name:车型名字列表
+    :param list_con:车型信息列表
+    :param list_price:车型价格列表
+    """
     # 打开手动获取的动态资源网站文件并解析
     path = filePath
     text = open(path, encoding='utf-8').read()
@@ -55,18 +69,19 @@ headers = {
 # 以浏览器保存的Cookie方式请求连接(局限在无法获取动态刷新的网站内容)
 r = requests.Session().get(yihaiUrl, headers=headers)
 
-# 方案二(成功,但需手动到浏览器控制台复制html信息)
-# 手动获取动态刷新网站内容
-filePath = 'D:\PyProject\pythonProject1\clia\\yihaiSZ.txt'
-# 定位需要获取数据的html标签,装入列表以便遍历输出
-img_list = '//div[@class="wraplist"]//div[@class="det-carlist"]//div[@class="licar-picinfo"]'
-# 定位需爬取的图片具体位置
-img_url = './@data-original'
-img_name = './@alt'
-# 定位需要的车型信息
-list_name = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-namebox"]//div[@class="licar-nameinfo"]//p[@class="car-nameinfo"]//span//text()'
-list_con = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-namebox"]//div[@class="licar-nameinfo"]//p[@class="car-introinfo"]//text()'
-list_price = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-info"]//div[@class="condition1"]//div[@class="carprice"]//div[@class="current-price"]//em//text()'
-# 保存图片和sql
-downloadImage(img_list, img_url, img_name, filePath)
-sqlSplicing(filePath, list_name, list_con, list_price)
+if __name__ == '__main__':
+    # 方案二(成功,但需手动到浏览器控制台复制html信息)
+    # 手动获取动态刷新网站内容
+    filePath = 'D:\PyProject\pythonProject1\clia\\yihaiSZ.txt'
+    # 定位需要获取数据的html标签,装入列表以便遍历输出
+    img_list = '//div[@class="wraplist"]//div[@class="det-carlist"]//div[@class="licar-picinfo"]'
+    # 定位需爬取的图片具体位置
+    img_url = './@data-original'
+    img_name = './@alt'
+    # 定位需要的车型信息
+    list_name = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-namebox"]//div[@class="licar-nameinfo"]//p[@class="car-nameinfo"]//span//text()'
+    list_con = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-namebox"]//div[@class="licar-nameinfo"]//p[@class="car-introinfo"]//text()'
+    list_price = '//div[@class="wraplist"]//div[@class="det-carlist"]//li[@class="licar-info"]//div[@class="condition1"]//div[@class="carprice"]//div[@class="current-price"]//em//text()'
+    # 保存图片和sql
+    downloadImage(img_list, img_url, img_name, filePath)
+    sqlSplicing(filePath, list_name, list_con, list_price)
